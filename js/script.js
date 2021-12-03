@@ -14,9 +14,9 @@ This function will create and insert/append the elements needed to display a "pa
 var picPerPage = 9;
 
 function showPage(data,page){
+  //console.log("in showPage");
 
-  console.log("page");
-  console.log(page);
+  
    items_page = picPerPage;
 
    start = (page  * items_page) - items_page;
@@ -33,7 +33,7 @@ function showPage(data,page){
       inner  += `<li class="student-item cf">
         <div class="student-details">
           <img class="avatar" src="${data[i].picture.large}" alt="Profile Picture">
-          <h3>${data[i].name.first} ${data[i].name.second}</h3>
+          <h3>${data[i].name.first} ${data[i].name.last}</h3>
           <span class="email">${data[i].email}</span>
         </div>
         <div class="joined-details">
@@ -58,7 +58,8 @@ This function will create and insert/append the elements needed for the paginati
 */
 
 function addPagination(list) {
-  
+  //console.log("in addPag");
+  showPage(list,1);
 
    numOfPages = Math.ceil(list.length / picPerPage);
 
@@ -83,19 +84,19 @@ function addPagination(list) {
     
     var btnBefore =document.querySelector(".link-list > li button")
     btnBefore.classList.add("active");
-    console.log(btnBefore.innerText);
+    //console.log(btnBefore.innerText);
       //showPage(data,parseInt(btnBefore.innerText));
       
     var btnNow;
 
     ul.addEventListener("click", function(e) {
 
-      console.log("click");
+     // console.log("click");
       btnNow = e.target;
       btnNow.classList.add("active");
       btnBefore.classList.remove("active");
       console.log(btnNow.innerText);
-      showPage(data,parseInt(btnNow.innerText));
+      showPage(list,parseInt(btnNow.innerText));
       btnBefore = btnNow;
       
     }); 
@@ -103,8 +104,50 @@ function addPagination(list) {
   
 }
 
+
+
+
+//-- Extra Credit: Dynamically insert search form here  
+
+function insertSerachBar( ){
+  
+  var el = document.createElement("span");
+  el.innerHTML = `<label for="search" class="student-search">
+  <span>Search by name</span>
+  <input id="search" placeholder="Search by name...">
+  <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+  </label>`;
+  var headerH2 = document.querySelector("header") 
+  headerH2.appendChild(el);
+
+  const searchBar = document.getElementById('search');
+  
+  searchBar.addEventListener('keyup',(e)=> {
+    const target =e.target.value;
+    const filterdData = data.filter( object => {
+      return object.name.first.includes(target) || object.name.last.includes(target);
+    })
+    //console.log(filterdData);
+    if(filterdData.length == 0){
+      ul = document.querySelector(".link-list");
+      ul.innerHTML = "";
+      ul2 = document.querySelector(".student-list");
+      ul2.innerHTML = "No results found";
+      //console.log("No results found");
+     
+    }else{
+      //console.log("in else");
+      addPagination(filterdData);
+    }
+    
+  });
+ 
+
+}
+
 // Call functions
-showPage(data,1)
 addPagination(data);
+insertSerachBar();
+
 
 
