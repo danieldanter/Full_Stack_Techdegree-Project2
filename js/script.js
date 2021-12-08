@@ -90,15 +90,17 @@ function addPagination(list) {
     var btnNow;
 
     ul.addEventListener("click", function(e) {
-
-     // console.log("click");
-      btnNow = e.target;
-      btnNow.classList.add("active");
-      btnBefore.classList.remove("active");
-      console.log(btnNow.innerText);
-      showPage(list,parseInt(btnNow.innerText));
-      btnBefore = btnNow;
       
+     // console.log("click");
+      //console.log(e.target.type === "button")
+      if(e.target.type === "button"){
+        btnNow = e.target;
+        btnNow.classList.add("active");
+        btnBefore.classList.remove("active");
+        //console.log(btnNow.innerText);
+        showPage(list,parseInt(btnNow.innerText));
+        btnBefore = btnNow;
+      }
     }); 
 
   

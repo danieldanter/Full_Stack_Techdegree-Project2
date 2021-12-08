@@ -146,11 +146,15 @@ header h2 {
 .pagination {
   margin: 30px 0 60px;
   text-align: center;
+  
+  
 }
 
 .pagination li {
   display: inline;
   padding: 0 3px;
+  
+  
 }
 
 .pagination li button {
